@@ -4,6 +4,7 @@ const choice = document.querySelector('.choices');
 
 let questionNumber = 1;
 let score = 0;
+const choiceAlphabet = ['A', 'B', 'C', 'D'];
 
 function updatePage() {
   if (questionNumber < 5) {
@@ -16,7 +17,6 @@ function updatePage() {
       'What is 9 + 9'
     ];
     let childNum = 0;
-    const choiceAlphabet = ['A', 'B', 'C', 'D'];
     const answerSheet = [[2,4,5,7],[1,5,10,11], [20,30,10,14],[12,20,27,18]];
     
     question.innerText = `${questions[questionNumber-1]}`;
@@ -34,7 +34,7 @@ function updatePage() {
     for (let c of child) {
       c.addEventListener('click', () => {
         let val = c.innerText;
-        checkAnswer(questionNumber, val[0]);
+        checkAnswer(questionNumber, choiceAlphabet.indexOf(val[0]));
       })
     }
     document.querySelector('.score').innerText = score;
@@ -55,10 +55,17 @@ function updatePage() {
 
 function checkAnswer(question, answer) {
   document.querySelector('.meter').value += 25;
-  if((question === 1 && answer === 'A') || (question === 2 && answer === 'B') || (question === 3 && answer === 'C') || (question === 4 && answer === 'D')) {
+  if((question === 1 && answer === 0) || (question === 2 && answer === 1) || (question === 3 && answer === 2) || (question === 4 && answer === 3)) {
     score++;
+    document.querySelector(`.child${answer+1}`).setAttribute('style', 'background-color: green');
   } 
+  else {
+    document.querySelector(`.child${answer+1}`).setAttribute('style', 'background-color: red');
+
+  }
+  setTimeout(updatePage, 1000);
   questionNumber++;
-  updatePage();
+  // updatePage();
+
 }
 
